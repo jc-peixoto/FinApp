@@ -1,0 +1,123 @@
+<ion-content [class.dark]="isDarkMode" class="dashboard-content">
+  <!-- Header -->
+  <div class="header">
+    <div class="header-content">
+      <div class="user-info">
+        <h1>FinApp</h1>
+        <span class="username">{{ currentUser }}</span>
+      </div>
+      <div class="balance-info">
+        <span class="balance-label">Saldo Total</span>
+        <span class="balance-amount" [class.positive]="totalBalance >= 0" [class.negative]="totalBalance < 0">
+          {{ formatCurrency(totalBalance) }}
+        </span>
+      </div>
+      <div class="header-actions">
+        <ion-button fill="clear" (click)="toggleDarkMode()" class="dark-mode-btn">
+          <ion-icon [name]="isDarkMode ? 'sunny' : 'moon'"></ion-icon>
+        </ion-button>
+        <ion-button fill="clear" (click)="logout()" class="logout-btn">
+          <ion-icon name="log-out"></ion-icon>
+        </ion-button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Quick Actions -->
+  <div class="quick-actions">
+    <ion-button fill="clear" class="action-btn income-btn" (click)="navigateToTransactions()">
+      <ion-icon name="add" slot="icon-only"></ion-icon>
+      <span>Receita</span>
+    </ion-button>
+    <ion-button fill="clear" class="action-btn expense-btn" (click)="navigateToTransactions()">
+      <ion-icon name="remove" slot="icon-only"></ion-icon>
+      <span>Despesa</span>
+    </ion-button>
+    <ion-button fill="clear" class="action-btn investment-btn" (click)="navigateToInvestments()">
+      <ion-icon name="trending-up" slot="icon-only"></ion-icon>
+      <span>Investimentos</span>
+    </ion-button>
+    <ion-button fill="clear" class="action-btn goals-btn" (click)="navigateToGoals()">
+      <ion-icon name="flag" slot="icon-only"></ion-icon>
+      <span>Metas</span>
+    </ion-button>
+  </div>
+
+  <!-- Summary Cards -->
+  <div class="summary-cards">
+    <div class="card income-card">
+      <div class="card-icon">
+        <ion-icon name="arrow-up"></ion-icon>
+      </div>
+      <div class="card-content">
+        <span class="card-label">Receitas</span>
+        <span class="card-value">{{ formatCurrency(totalIncome) }}</span>
+      </div>
+    </div>
+    <div class="card expense-card">
+      <div class="card-icon">
+        <ion-icon name="arrow-down"></ion-icon>
+      </div>
+      <div class="card-content">
+        <span class="card-label">Despesas</span>
+        <span class="card-value">{{ formatCurrency(totalExpense) }}</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Recent Transactions -->
+  <div class="transactions-section">
+    <div class="section-header">
+      <h2>Transações Recentes</h2>
+      <ion-button fill="clear" (click)="navigateToTransactions()" class="view-all-btn">
+        <ion-icon name="eye" slot="icon-only"></ion-icon>
+      </ion-button>
+    </div>
+    
+    <div class="filter-options">
+      <ion-button 
+        fill="clear" 
+        [class.active]="currentFilter === 'all'"
+        (click)="setFilter('all')"
+        class="filter-option">
+        Todas
+      </ion-button>
+      <ion-button 
+        fill="clear" 
+        [class.active]="currentFilter === 'income'"
+        (click)="setFilter('income')"
+        class="filter-option">
+        Receitas
+      </ion-button>
+      <ion-button 
+        fill="clear" 
+        [class.active]="currentFilter === 'expense'"
+        (click)="setFilter('expense')"
+        class="filter-option">
+        Despesas
+      </ion-button>
+    </div>
+
+    <div class="transactions-list">
+      <div *ngIf="getFilteredTransactions().length === 0" class="empty-state">
+        <ion-icon name="receipt"></ion-icon>
+        <h3>Nenhuma transação encontrada</h3>
+        <p>{{ currentFilter === 'all' ? 'Adicione sua primeira transação clicando nos botões acima.' : 'Nenhuma transação encontrada para este filtro.' }}</p>
+      </div>
+      
+      <div *ngFor="let transaction of getFilteredTransactions().slice(0, 5)" class="transaction-item">
+        <div class="transaction-info">
+          <div class="transaction-description">{{ transaction.description }}</div>
+          <div class="transaction-category">{{ getCategoryName(transaction.category) }}</div>
+          <div class="transaction-date">{{ formatDate(transaction.date) }}</div>
+        </div>
+        <div class="transaction-amount" [class.income]="transaction.type === 'income'" [class.expense]="transaction.type === 'expense'">
+          {{ transaction.type === 'income' ? '+' : '-' }} {{ formatCurrency(transaction.amount) }}
+        </div>
+        <ion-button fill="clear" (click)="deleteTransaction(transaction.id)" class="delete-btn">
+          <ion-icon name="trash" slot="icon-only"></ion-icon>
+        </ion-button>
+      </div>
+    </div>
+  </div>
+</ion-content>

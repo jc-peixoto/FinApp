@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FinApp - Controle Financeiro</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <div class="user-info">
+                    <h1>FinApp</h1>
+                    <span class="username" id="currentUser">Usuário</span>
+                </div>
+                <div class="balance-info">
+                    <span class="balance-label">Saldo Total</span>
+                    <span class="balance-amount" id="totalBalance">R$ 0,00</span>
+                </div>
+                <button class="dark-mode-btn" onclick="toggleDarkMode()" title="Alternar modo escuro">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <button class="logout-btn" onclick="logout()">
+                    <i class="fas fa-sign-out-alt"></i>
+                </button>
+            </div>
+        </header>
+
+        <!-- Quick Actions -->
+        <section class="quick-actions">
+            <button class="action-btn income-btn" onclick="showTransactionModal('income')">
+                <i class="fas fa-plus"></i>
+                <span>Receita</span>
+            </button>
+            <button class="action-btn expense-btn" onclick="showTransactionModal('expense')">
+                <i class="fas fa-minus"></i>
+                <span>Despesa</span>
+            </button>
+            <button class="action-btn investment-btn" onclick="showInvestmentModal()">
+                <i class="fas fa-chart-line"></i>
+                <span>Investimentos</span>
+            </button>
+            <button class="action-btn goals-btn" onclick="showGoalsModal()">
+                <i class="fas fa-bullseye"></i>
+                <span>Metas</span>
+            </button>
+        </section>
+
+        <!-- Summary Cards -->
+        <section class="summary-cards">
+            <div class="card income-card">
+                <div class="card-icon">
+                    <i class="fas fa-arrow-up"></i>
+                </div>
+                <div class="card-content">
+                    <span class="card-label">Receitas</span>
+                    <span class="card-value" id="totalIncome">R$ 0,00</span>
+                </div>
+            </div>
+            <div class="card expense-card">
+                <div class="card-icon">
+                    <i class="fas fa-arrow-down"></i>
+                </div>
+                <div class="card-content">
+                    <span class="card-label">Despesas</span>
+                    <span class="card-value" id="totalExpense">R$ 0,00</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Recent Transactions -->
+        <section class="transactions-section">
+            <div class="section-header">
+                <h2>Transações Recentes</h2>
+                <button class="filter-btn" onclick="toggleFilter()">
+                    <i class="fas fa-filter"></i>
+                </button>
+            </div>
+            
+            <div class="filter-options" id="filterOptions" style="display: none;">
+                <button class="filter-option active" data-filter="all">Todas</button>
+                <button class="filter-option" data-filter="income">Receitas</button>
+                <button class="filter-option" data-filter="expense">Despesas</button>
+            </div>
+
+            <div class="transactions-list" id="transactionsList">
+                <!-- Transactions will be added here by JavaScript -->
+            </div>
+        </section>
+
+        <!-- Transaction Modal -->
+        <div class="modal-overlay" id="transactionModal">
+            <div class="modal">
+                <div class="modal-header">
+                    <h3 id="modalTitle">Nova Transação</h3>
+                    <button class="close-btn" onclick="closeTransactionModal()">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <form id="transactionForm" class="transaction-form">
+                    <div class="form-group">
+                        <label for="description">Descrição</label>
+                        <input type="text" id="description" required placeholder="Ex: Salário, Aluguel, etc.">
+                    </div>
+                    <div class="form-group">
+                        <label for="amount">Valor</label>
+                        <input type="number" id="amount" step="0.01" required placeholder="0,00">
+                    </div>
+                    <div class="form-group">
+                        <label for="category">Categoria</label>
+                        <select id="category" required>
+                            <option value="">Selecione uma categoria</option>
+                            <option value="salary">Salário</option>
+                            <option value="freelance">Freelance</option>
+                            <option value="investment">Investimento</option>
+                            <option value="food">Alimentação</option>
+                            <option value="transport">Transporte</option>
+                            <option value="housing">Moradia</option>
+                            <option value="entertainment">Entretenimento</option>
+                            <option value="health">Saúde</option>
+                            <option value="education">Educação</option>
+                            <option value="other">Outros</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="date">Data</label>
+                        <input type="date" id="date" required>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn-secondary" onclick="closeTransactionModal()">Cancelar</button>
+                        <button type="submit" class="btn-primary">Salvar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Investment Modal -->
+        <div class="modal-overlay" id="investmentModal">
+            <div class="modal investment-modal">
+                <div class="modal-header">
+                    <h3>Investimentos</h3>
+                    <button class="close-btn" onclick="closeInvestmentModal()">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                
+                <div class="investment-content">
+                    <!-- Tabs -->
+                    <div class="investment-tabs">
+                        <button class="tab-btn active" data-tab="favorites">
+                            <i class="fas fa-star"></i>
+                            Favoritos
+                        </button>
+                        <button class="tab-btn" data-tab="popular">
+                            <i class="fas fa-fire"></i>
+                            Populares
+                        </button>
+                        <button class="tab-btn" data-tab="portfolio">
+                            <i class="fas fa-briefcase"></i>
+                            Meu Portfólio
+                        </button>
+                    </div>
+
+                    <!-- Search -->
+                    <div class="search-section">
+                        <div class="search-input">
+                            <i class="fas fa-search"></i>
+                            <input type="text" id="stockSearch" placeholder="Buscar ações..." onkeyup="searchStocks()">
+                        </div>
+                    </div>
+
+                    <!-- Favorites Tab -->
+                    <div class="tab-content active" id="favoritesTab">
+                        <div class="stocks-list" id="favoritesList">
+                            <!-- Favoritos serão carregados aqui -->
+                        </div>
+                        <div class="empty-favorites" id="emptyFavorites" style="display: none;">
+                            <i class="fas fa-star"></i>
+                            <h4>Nenhum favorito adicionado</h4>
+                            <p>Adicione ações aos seus favoritos para acompanhá-las aqui</p>
+                        </div>
+                    </div>
+
+                    <!-- Popular Tab -->
+                    <div class="tab-content" id="popularTab">
+                        <div class="stocks-list" id="popularList">
+                            <!-- Ações populares serão carregadas aqui -->
+                        </div>
+                    </div>
+
+                    <!-- Portfolio Tab -->
+                    <div class="tab-content" id="portfolioTab">
+                        <div class="portfolio-summary">
+                            <div class="portfolio-card">
+                                <div class="portfolio-card-header">
+                                    <i class="fas fa-chart-line"></i>
+                                    <span>Total Investido</span>
+                                </div>
+                                <div class="portfolio-card-value" id="totalInvested">R$ 0,00</div>
+                            </div>
+                            <div class="portfolio-card">
+                                <div class="portfolio-card-header">
+                                    <i class="fas fa-dollar-sign"></i>
+                                    <span>Valor Atual</span>
+                                </div>
+                                <div class="portfolio-card-value" id="currentValue">R$ 0,00</div>
+                            </div>
+                            <div class="portfolio-card">
+                                <div class="portfolio-card-header">
+                                    <i class="fas fa-trending-up"></i>
+                                    <span>Lucro/Prejuízo</span>
+                                </div>
+                                <div class="portfolio-card-value" id="totalProfit">R$ 0,00</div>
+                            </div>
+                        </div>
+                        <div class="portfolio-list" id="portfolioList">
+                            <!-- Portfólio será carregado aqui -->
+                        </div>
+                        <div class="empty-portfolio" id="emptyPortfolio" style="display: none;">
+                            <i class="fas fa-briefcase"></i>
+                            <h4>Portfólio vazio</h4>
+                            <p>Adicione ações ao seu portfólio para acompanhar seus investimentos</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Add to Portfolio Modal -->
+        <div class="modal-overlay" id="portfolioModal">
+            <div class="modal add-portfolio-modal">
+                <div class="modal-header">
+                    <h3 id="portfolioModalTitle">Adicionar ao Portfólio</h3>
+                    <button class="close-btn" onclick="closePortfolioModal()">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <form id="portfolioForm" class="portfolio-form">
+                    <div class="form-group">
+                        <label for="portfolioQuantity">Quantidade de ações</label>
+                        <div class="quantity-input">
+                            <button type="button" onclick="decreaseQuantity()">-</button>
+                            <input type="number" id="portfolioQuantity" min="1" value="1" required>
+                            <button type="button" onclick="increaseQuantity()">+</button>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="portfolioPrice">Preço médio por ação</label>
+                        <input type="number" id="portfolioPrice" step="0.01" required placeholder="0,00">
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn-secondary" onclick="closePortfolioModal()">Cancelar</button>
+                        <button type="submit" class="btn-primary">Adicionar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Goals Modal -->
+        <div class="modal-overlay" id="goalsModal">
+            <div class="modal goals-modal">
+                <div class="modal-header">
+                    <h3>Minhas Metas</h3>
+                    <button class="close-btn" onclick="closeGoalsModal()">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                
+                <div class="goals-content">
+                    <!-- Add Goal Button -->
+                    <div class="add-goal-section">
+                        <button class="add-goal-btn" onclick="showAddGoalModal()">
+                            <i class="fas fa-plus"></i>
+                            Nova Meta
+                        </button>
+                    </div>
+
+                    <!-- Goals List -->
+                    <div class="goals-list" id="goalsList">
+                        <!-- Metas serão carregadas aqui -->
+                    </div>
+                    
+                    <div class="empty-goals" id="emptyGoals" style="display: none;">
+                        <i class="fas fa-bullseye"></i>
+                        <h4>Nenhuma meta criada</h4>
+                        <p>Crie sua primeira meta para começar a economizar</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Add Goal Modal -->
+        <div class="modal-overlay" id="addGoalModal">
+            <div class="modal add-goal-modal">
+                <div class="modal-header">
+                    <h3 id="addGoalModalTitle">Nova Meta</h3>
+                    <button class="close-btn" onclick="closeAddGoalModal()">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <form id="goalForm" class="goal-form">
+                    <div class="form-group">
+                        <label for="goalTitle">Título da Meta</label>
+                        <input type="text" id="goalTitle" required placeholder="Ex: Viagem para Europa">
+                    </div>
+                    <div class="form-group">
+                        <label for="goalDescription">Descrição (opcional)</label>
+                        <textarea id="goalDescription" rows="3" placeholder="Descreva sua meta..."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="goalTarget">Valor da Meta</label>
+                        <input type="number" id="goalTarget" step="0.01" required placeholder="0,00">
+                    </div>
+                    <div class="form-group">
+                        <label for="goalImage">Imagem (opcional)</label>
+                        <input type="file" id="goalImage" accept="image/*" onchange="previewGoalImage(event)">
+                        <div class="image-preview" id="imagePreview" style="display: none;">
+                            <img id="previewImg" src="" alt="Preview">
+                            <button type="button" class="remove-image-btn" onclick="removeGoalImage()">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn-secondary" onclick="closeAddGoalModal()">Cancelar</button>
+                        <button type="submit" class="btn-primary">Criar Meta</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Add Money to Goal Modal -->
+        <div class="modal-overlay" id="addMoneyModal">
+            <div class="modal add-money-modal">
+                <div class="modal-header">
+                    <h3 id="addMoneyModalTitle">Adicionar Dinheiro</h3>
+                    <button class="close-btn" onclick="closeAddMoneyModal()">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <form id="addMoneyForm" class="add-money-form">
+                    <div class="form-group">
+                        <label for="moneyAmount">Valor a adicionar</label>
+                        <input type="number" id="moneyAmount" step="0.01" required placeholder="0,00">
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn-secondary" onclick="closeAddMoneyModal()">Cancelar</button>
+                        <button type="submit" class="btn-primary">Adicionar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

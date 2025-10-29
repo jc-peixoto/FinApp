@@ -1,0 +1,7 @@
+{
+  "name": "AAI3",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}

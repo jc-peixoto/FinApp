@@ -1,0 +1,707 @@
+.investments-content {
+  --background: #f8f9fa;
+  min-height: 100vh;
+}
+
+.investments-content.dark {
+  --background: #0f0f23;
+}
+
+/* Header */
+.header {
+  background: linear-gradient(135deg, #288CFA 0%, #103766 100%);
+  color: white;
+  padding: 20px;
+  border-radius: 0 0 25px 25px;
+  box-shadow: 0 4px 20px rgba(16, 55, 102, 0.1);
+}
+
+.investments-content.dark .header {
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+}
+
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header-content h1 {
+  font-size: 24px;
+  font-weight: 700;
+  margin: 0;
+}
+
+.back-btn {
+  --color: white;
+  --background: rgba(255, 255, 255, 0.2);
+  --border-radius: 50%;
+  width: 40px;
+  height: 40px;
+}
+
+.back-btn:hover {
+  --background: rgba(255, 255, 255, 0.3);
+  transform: scale(1.1);
+}
+
+/* Tabs */
+.tabs-section {
+  padding: 20px;
+}
+
+.investment-tabs {
+  display: flex;
+  background: #f8f9fa;
+  border-radius: 12px;
+  padding: 4px;
+}
+
+.investments-content.dark .investment-tabs {
+  background: #2a2a3e;
+}
+
+.tab-btn {
+  flex: 1;
+  --background: none;
+  --color: #7E7E7E;
+  --border-radius: 8px;
+  --padding-start: 16px;
+  --padding-end: 16px;
+  --padding-top: 12px;
+  --padding-bottom: 12px;
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.investments-content.dark .tab-btn {
+  --color: #b0b0b0;
+}
+
+.tab-btn.active {
+  --background: white;
+  --color: #288CFA;
+  box-shadow: 0 2px 8px rgba(16, 55, 102, 0.1);
+}
+
+.investments-content.dark .tab-btn.active {
+  --background: #1a1a2e;
+  --color: #288CFA;
+}
+
+.tab-btn ion-icon {
+  font-size: 16px;
+}
+
+/* Search Section */
+.search-section {
+  padding: 0 20px 20px;
+}
+
+.search-item {
+  --background: white;
+  --border-radius: 10px;
+  --border-width: 2px;
+  --border-color: #BDC4D0;
+  --padding-start: 15px;
+  --padding-end: 15px;
+  --padding-top: 12px;
+  --padding-bottom: 12px;
+  border-radius: 10px;
+}
+
+.investments-content.dark .search-item {
+  --background: #2a2a3e;
+  --border-color: #3a3a4e;
+  --color: #ffffff;
+}
+
+.search-item ion-icon {
+  color: #7E7E7E;
+  font-size: 16px;
+}
+
+.search-item ion-input {
+  --color: #103766;
+  font-size: 16px;
+}
+
+.investments-content.dark .search-item ion-input {
+  --color: #ffffff;
+}
+
+/* Portfolio Summary */
+.portfolio-summary {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 10px;
+  padding: 0 20px 20px;
+}
+
+.portfolio-card {
+  background: white;
+  border-radius: 12px;
+  padding: 15px;
+  box-shadow: 0 2px 8px rgba(16, 55, 102, 0.1);
+  text-align: center;
+}
+
+.investments-content.dark .portfolio-card {
+  background: #1a1a2e;
+  color: #ffffff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.portfolio-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 8px;
+  font-size: 12px;
+  color: #7E7E7E;
+  font-weight: 600;
+}
+
+.investments-content.dark .portfolio-card-header {
+  color: #b0b0b0;
+}
+
+.portfolio-card-header ion-icon {
+  font-size: 14px;
+}
+
+.portfolio-card-value {
+  font-size: 16px;
+  font-weight: 700;
+  color: #103766;
+}
+
+.investments-content.dark .portfolio-card-value {
+  color: #ffffff;
+}
+
+.portfolio-card-value.positive {
+  color: #2E865F;
+}
+
+.portfolio-card-value.negative {
+  color: #FF4C4C;
+}
+
+/* Content Section */
+.content-section {
+  padding: 0 20px 20px;
+}
+
+/* Stock Items */
+.stock-item {
+  background: white;
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 2px 8px rgba(16, 55, 102, 0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: transform 0.2s ease;
+  margin-bottom: 12px;
+}
+
+.investments-content.dark .stock-item {
+  background: #1a1a2e;
+  color: #ffffff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.stock-item:hover {
+  transform: translateX(5px);
+}
+
+.stock-info {
+  flex: 1;
+}
+
+.stock-symbol {
+  font-weight: 700;
+  font-size: 18px;
+  color: #103766;
+  margin-bottom: 4px;
+}
+
+.investments-content.dark .stock-symbol {
+  color: #ffffff;
+}
+
+.stock-name {
+  font-size: 14px;
+  color: #7E7E7E;
+  margin-bottom: 8px;
+}
+
+.investments-content.dark .stock-name {
+  color: #b0b0b0;
+}
+
+.stock-price {
+  font-weight: 600;
+  font-size: 16px;
+  color: #103766;
+}
+
+.investments-content.dark .stock-price {
+  color: #ffffff;
+}
+
+.stock-change {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+  margin-right: 12px;
+}
+
+.change-amount {
+  font-weight: 700;
+  font-size: 16px;
+}
+
+.change-amount.positive {
+  color: #2E865F;
+}
+
+.change-amount.negative {
+  color: #FF4C4C;
+}
+
+.change-percent {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.change-percent.positive {
+  color: #2E865F;
+}
+
+.change-percent.negative {
+  color: #FF4C4C;
+}
+
+.stock-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.favorite-btn {
+  --color: #ffc107;
+  --padding: 8px;
+  --border-radius: 6px;
+}
+
+.favorite-btn:hover {
+  --background: rgba(255, 193, 7, 0.1);
+}
+
+.favorite-btn.active {
+  --color: #ffc107;
+}
+
+.favorite-btn:not(.active) {
+  --color: #BDC4D0;
+}
+
+.portfolio-btn {
+  --color: #288CFA;
+  --padding: 8px;
+  --border-radius: 6px;
+}
+
+.portfolio-btn:hover {
+  --background: rgba(40, 140, 250, 0.1);
+}
+
+.portfolio-btn.in-portfolio {
+  --color: #2E865F;
+}
+
+.portfolio-btn.in-portfolio:hover {
+  --background: rgba(46, 134, 95, 0.1);
+}
+
+/* Portfolio Items */
+.portfolio-item {
+  background: white;
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 2px 8px rgba(16, 55, 102, 0.1);
+  transition: transform 0.2s ease;
+  margin-bottom: 12px;
+}
+
+.investments-content.dark .portfolio-item {
+  background: #1a1a2e;
+  color: #ffffff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.portfolio-item:hover {
+  transform: translateX(5px);
+}
+
+.portfolio-item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.portfolio-stock-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.portfolio-stock-symbol {
+  font-weight: 700;
+  font-size: 18px;
+  color: #103766;
+}
+
+.investments-content.dark .portfolio-stock-symbol {
+  color: #ffffff;
+}
+
+.portfolio-stock-name {
+  font-size: 14px;
+  color: #7E7E7E;
+}
+
+.investments-content.dark .portfolio-stock-name {
+  color: #b0b0b0;
+}
+
+.portfolio-quantity {
+  background: #f8f9fa;
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #7E7E7E;
+}
+
+.investments-content.dark .portfolio-quantity {
+  background: #2a2a3e;
+  color: #b0b0b0;
+}
+
+.portfolio-details {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.portfolio-detail {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.portfolio-detail-label {
+  font-size: 12px;
+  color: #7E7E7E;
+  font-weight: 600;
+}
+
+.investments-content.dark .portfolio-detail-label {
+  color: #b0b0b0;
+}
+
+.portfolio-detail-value {
+  font-size: 14px;
+  font-weight: 700;
+  color: #103766;
+}
+
+.investments-content.dark .portfolio-detail-value {
+  color: #ffffff;
+}
+
+.portfolio-detail-value.positive {
+  color: #2E865F;
+}
+
+.portfolio-detail-value.negative {
+  color: #FF4C4C;
+}
+
+.portfolio-actions {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+}
+
+.edit-btn {
+  --color: #288CFA;
+  --border-color: #288CFA;
+  --border-radius: 6px;
+  --padding-start: 12px;
+  --padding-end: 12px;
+  --padding-top: 6px;
+  --padding-bottom: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: none;
+}
+
+.edit-btn:hover {
+  --background: #288CFA;
+  --color: white;
+}
+
+.remove-btn {
+  --color: #FF4C4C;
+  --border-color: #FF4C4C;
+  --border-radius: 6px;
+  --padding-start: 12px;
+  --padding-end: 12px;
+  --padding-top: 6px;
+  --padding-bottom: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: none;
+}
+
+.remove-btn:hover {
+  --background: #FF4C4C;
+  --color: white;
+}
+
+/* Empty state */
+.empty-state {
+  text-align: center;
+  padding: 40px 20px;
+  color: #7E7E7E;
+}
+
+.investments-content.dark .empty-state {
+  color: #b0b0b0;
+}
+
+.empty-state ion-icon {
+  font-size: 48px;
+  margin-bottom: 15px;
+  opacity: 0.5;
+}
+
+.empty-state h4 {
+  font-size: 18px;
+  margin-bottom: 10px;
+  color: #103766;
+}
+
+.investments-content.dark .empty-state h4 {
+  color: #ffffff;
+}
+
+.empty-state p {
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+/* Modal */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(16, 55, 102, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 20px;
+}
+
+.modal {
+  background: white;
+  border-radius: 20px;
+  width: 100%;
+  max-width: 400px;
+  max-height: 90vh;
+  overflow-y: auto;
+  animation: slideUp 0.3s ease;
+}
+
+.investments-content.dark .modal {
+  background: #1a1a2e;
+  color: #ffffff;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 20px 0;
+  margin-bottom: 20px;
+}
+
+.modal-header h3 {
+  font-size: 20px;
+  font-weight: 600;
+  color: #103766;
+  margin: 0;
+}
+
+.investments-content.dark .modal-header h3 {
+  color: #ffffff;
+}
+
+.close-btn {
+  --color: #7E7E7E;
+  --padding: 5px;
+}
+
+.portfolio-form {
+  padding: 0 20px 20px;
+}
+
+.form-item {
+  --background: #f8f9fa;
+  --border-radius: 12px;
+  --border-width: 2px;
+  --border-color: #BDC4D0;
+  --padding-start: 15px;
+  --padding-end: 15px;
+  --padding-top: 15px;
+  --padding-bottom: 15px;
+  margin-bottom: 20px;
+  border-radius: 12px;
+}
+
+.investments-content.dark .form-item {
+  --background: #2a2a3e;
+  --border-color: #3a3a4e;
+  --color: #ffffff;
+}
+
+.form-item ion-label {
+  color: #103766;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.investments-content.dark .form-item ion-label {
+  color: #ffffff;
+}
+
+.form-item ion-input {
+  --color: #103766;
+  font-size: 16px;
+}
+
+.investments-content.dark .form-item ion-input {
+  --color: #ffffff;
+}
+
+.quantity-input {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.quantity-input ion-input {
+  flex: 1;
+}
+
+.quantity-input ion-button {
+  --color: #288CFA;
+  --background: #288CFA;
+  --border-radius: 6px;
+  --padding-start: 12px;
+  --padding-end: 12px;
+  --padding-top: 8px;
+  --padding-bottom: 8px;
+  font-weight: 600;
+}
+
+.quantity-input ion-button:hover {
+  --background: #103766;
+}
+
+.quantity-input ion-button[disabled] {
+  --background: #7E7E7E;
+  --color: white;
+}
+
+.form-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 30px;
+}
+
+.btn-secondary {
+  flex: 1;
+  --background: #BDC4D0;
+  --color: #7E7E7E;
+  --border-radius: 10px;
+  --padding-top: 12px;
+  --padding-bottom: 12px;
+  font-weight: 600;
+  text-transform: none;
+}
+
+.btn-secondary:hover {
+  --background: #a8b0bc;
+}
+
+.btn-primary {
+  flex: 1;
+  --background: linear-gradient(135deg, #288CFA, #103766);
+  --color: white;
+  --border-radius: 10px;
+  --padding-top: 12px;
+  --padding-bottom: 12px;
+  font-weight: 600;
+  text-transform: none;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(40, 140, 250, 0.4);
+}
+
+/* Responsividade */
+@media (max-width: 480px) {
+  .portfolio-summary {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+  
+  .content-section {
+    padding: 0 15px 15px;
+  }
+  
+  .tabs-section {
+    padding: 15px;
+  }
+  
+  .search-section {
+    padding: 0 15px 15px;
+  }
+}

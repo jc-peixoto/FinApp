@@ -1,0 +1,268 @@
+<ion-content [class.dark]="isDarkMode" class="investments-content">
+  <!-- Header -->
+  <div class="header">
+    <div class="header-content">
+      <ion-button fill="clear" (click)="goBack()" class="back-btn">
+        <ion-icon name="arrow-back" slot="icon-only"></ion-icon>
+      </ion-button>
+      <h1>Investimentos</h1>
+    </div>
+  </div>
+
+  <!-- Tabs -->
+  <div class="tabs-section">
+    <div class="investment-tabs">
+      <ion-button 
+        fill="clear" 
+        [class.active]="currentTab === 'favorites'"
+        (click)="setTab('favorites')"
+        class="tab-btn">
+        <ion-icon name="star" slot="start"></ion-icon>
+        Favoritos
+      </ion-button>
+      <ion-button 
+        fill="clear" 
+        [class.active]="currentTab === 'popular'"
+        (click)="setTab('popular')"
+        class="tab-btn">
+        <ion-icon name="flame" slot="start"></ion-icon>
+        Populares
+      </ion-button>
+      <ion-button 
+        fill="clear" 
+        [class.active]="currentTab === 'portfolio'"
+        (click)="setTab('portfolio')"
+        class="tab-btn">
+        <ion-icon name="briefcase" slot="start"></ion-icon>
+        Portfólio
+      </ion-button>
+    </div>
+  </div>
+
+  <!-- Search Section -->
+  <div class="search-section" *ngIf="currentTab !== 'portfolio'">
+    <ion-item class="search-item">
+      <ion-icon name="search" slot="start"></ion-icon>
+      <ion-input 
+        [(ngModel)]="searchQuery" 
+        placeholder="Buscar ações..."
+        type="text">
+      </ion-input>
+    </ion-item>
+  </div>
+
+  <!-- Portfolio Summary -->
+  <div class="portfolio-summary" *ngIf="currentTab === 'portfolio'">
+    <div class="portfolio-card">
+      <div class="portfolio-card-header">
+        <ion-icon name="trending-up"></ion-icon>
+        <span>Total Investido</span>
+      </div>
+      <div class="portfolio-card-value">{{ formatCurrency(portfolioSummary.totalInvested) }}</div>
+    </div>
+    <div class="portfolio-card">
+      <div class="portfolio-card-header">
+        <ion-icon name="cash"></ion-icon>
+        <span>Valor Atual</span>
+      </div>
+      <div class="portfolio-card-value">{{ formatCurrency(portfolioSummary.currentValue) }}</div>
+    </div>
+    <div class="portfolio-card">
+      <div class="portfolio-card-header">
+        <ion-icon name="analytics"></ion-icon>
+        <span>Lucro/Prejuízo</span>
+      </div>
+      <div class="portfolio-card-value" [class.positive]="portfolioSummary.totalProfit >= 0" [class.negative]="portfolioSummary.totalProfit < 0">
+        {{ formatCurrency(portfolioSummary.totalProfit) }}
+      </div>
+    </div>
+  </div>
+
+  <!-- Content -->
+  <div class="content-section">
+    <!-- Favorites Tab -->
+    <div *ngIf="currentTab === 'favorites'" class="tab-content">
+      <div *ngIf="getFilteredStocks().length === 0" class="empty-state">
+        <ion-icon name="star"></ion-icon>
+        <h4>Nenhum favorito adicionado</h4>
+        <p>Adicione ações aos seus favoritos para acompanhá-las aqui</p>
+      </div>
+      
+      <div *ngFor="let stock of getFilteredStocks()" class="stock-item">
+        <div class="stock-info">
+          <div class="stock-symbol">{{ stock.symbol }}</div>
+          <div class="stock-name">{{ stock.name }}</div>
+          <div class="stock-price">{{ formatCurrency(stock.price) }}</div>
+        </div>
+        <div class="stock-change">
+          <div class="change-amount" [class.positive]="stock.change >= 0" [class.negative]="stock.change < 0">
+            {{ stock.change >= 0 ? '+' : '' }}{{ formatCurrency(stock.change) }}
+          </div>
+          <div class="change-percent" [class.positive]="stock.changePercent >= 0" [class.negative]="stock.changePercent < 0">
+            {{ stock.changePercent >= 0 ? '+' : '' }}{{ formatPercent(stock.changePercent) }}
+          </div>
+        </div>
+        <div class="stock-actions">
+          <ion-button 
+            fill="clear" 
+            (click)="toggleFavorite(stock.symbol)"
+            [class.active]="isFavorite(stock.symbol)"
+            class="favorite-btn">
+            <ion-icon name="star" slot="icon-only"></ion-icon>
+          </ion-button>
+          <ion-button 
+            fill="clear" 
+            (click)="openPortfolioModal(stock)"
+            [class.in-portfolio]="isInPortfolio(stock.symbol)"
+            class="portfolio-btn">
+            <ion-icon name="briefcase" slot="icon-only"></ion-icon>
+          </ion-button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Popular Tab -->
+    <div *ngIf="currentTab === 'popular'" class="tab-content">
+      <div *ngFor="let stock of getFilteredStocks()" class="stock-item">
+        <div class="stock-info">
+          <div class="stock-symbol">{{ stock.symbol }}</div>
+          <div class="stock-name">{{ stock.name }}</div>
+          <div class="stock-price">{{ formatCurrency(stock.price) }}</div>
+        </div>
+        <div class="stock-change">
+          <div class="change-amount" [class.positive]="stock.change >= 0" [class.negative]="stock.change < 0">
+            {{ stock.change >= 0 ? '+' : '' }}{{ formatCurrency(stock.change) }}
+          </div>
+          <div class="change-percent" [class.positive]="stock.changePercent >= 0" [class.negative]="stock.changePercent < 0">
+            {{ stock.changePercent >= 0 ? '+' : '' }}{{ formatPercent(stock.changePercent) }}
+          </div>
+        </div>
+        <div class="stock-actions">
+          <ion-button 
+            fill="clear" 
+            (click)="toggleFavorite(stock.symbol)"
+            [class.active]="isFavorite(stock.symbol)"
+            class="favorite-btn">
+            <ion-icon name="star" slot="icon-only"></ion-icon>
+          </ion-button>
+          <ion-button 
+            fill="clear" 
+            (click)="openPortfolioModal(stock)"
+            [class.in-portfolio]="isInPortfolio(stock.symbol)"
+            class="portfolio-btn">
+            <ion-icon name="briefcase" slot="icon-only"></ion-icon>
+          </ion-button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Portfolio Tab -->
+    <div *ngIf="currentTab === 'portfolio'" class="tab-content">
+      <div *ngIf="getPortfolioItems().length === 0" class="empty-state">
+        <ion-icon name="briefcase"></ion-icon>
+        <h4>Portfólio vazio</h4>
+        <p>Adicione ações ao seu portfólio para acompanhar seus investimentos</p>
+      </div>
+      
+      <div *ngFor="let item of getPortfolioItems()" class="portfolio-item">
+        <div class="portfolio-item-header">
+          <div class="portfolio-stock-info">
+            <div class="portfolio-stock-symbol">{{ item.symbol }}</div>
+            <div class="portfolio-stock-name">{{ item.name }}</div>
+          </div>
+          <div class="portfolio-quantity">{{ item.quantity }} ações</div>
+        </div>
+        <div class="portfolio-details">
+          <div class="portfolio-detail">
+            <div class="portfolio-detail-label">Preço Médio</div>
+            <div class="portfolio-detail-value">{{ formatCurrency(item.averagePrice) }}</div>
+          </div>
+          <div class="portfolio-detail">
+            <div class="portfolio-detail-label">Preço Atual</div>
+            <div class="portfolio-detail-value">{{ formatCurrency(item.currentPrice) }}</div>
+          </div>
+          <div class="portfolio-detail">
+            <div class="portfolio-detail-label">Total Investido</div>
+            <div class="portfolio-detail-value">{{ formatCurrency(item.totalInvested) }}</div>
+          </div>
+          <div class="portfolio-detail">
+            <div class="portfolio-detail-label">Valor Atual</div>
+            <div class="portfolio-detail-value">{{ formatCurrency(item.currentValue) }}</div>
+          </div>
+          <div class="portfolio-detail">
+            <div class="portfolio-detail-label">Lucro/Prejuízo</div>
+            <div class="portfolio-detail-value" [class.positive]="item.profit >= 0" [class.negative]="item.profit < 0">
+              {{ item.profit >= 0 ? '+' : '' }}{{ formatCurrency(item.profit) }}
+            </div>
+          </div>
+          <div class="portfolio-detail">
+            <div class="portfolio-detail-label">Rentabilidade</div>
+            <div class="portfolio-detail-value" [class.positive]="item.profitPercent >= 0" [class.negative]="item.profitPercent < 0">
+              {{ item.profitPercent >= 0 ? '+' : '' }}{{ formatPercent(item.profitPercent) }}
+            </div>
+          </div>
+        </div>
+        <div class="portfolio-actions">
+          <ion-button fill="outline" (click)="openPortfolioModal({symbol: item.symbol, name: item.name, price: item.currentPrice, change: 0, changePercent: 0})" class="edit-btn">
+            <ion-icon name="create" slot="start"></ion-icon>
+            Editar
+          </ion-button>
+          <ion-button fill="outline" (click)="removeFromPortfolio(item.symbol)" class="remove-btn">
+            <ion-icon name="trash" slot="start"></ion-icon>
+            Remover
+          </ion-button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Portfolio Modal -->
+  <div class="modal-overlay" *ngIf="showPortfolioModal" (click)="closePortfolioModal()">
+    <div class="modal" (click)="$event.stopPropagation()">
+      <div class="modal-header">
+        <h3>Adicionar ao Portfólio</h3>
+        <ion-button fill="clear" (click)="closePortfolioModal()" class="close-btn">
+          <ion-icon name="close" slot="icon-only"></ion-icon>
+        </ion-button>
+      </div>
+      
+      <form [formGroup]="portfolioForm" (ngSubmit)="onSubmitPortfolio()" class="portfolio-form">
+        <ion-item class="form-item">
+          <ion-label position="stacked">Quantidade de ações</ion-label>
+          <div class="quantity-input">
+            <ion-button fill="clear" (click)="decreaseQuantity()" [disabled]="portfolioForm.get('quantity')?.value <= 1">
+              <ion-icon name="remove" slot="icon-only"></ion-icon>
+            </ion-button>
+            <ion-input 
+              formControlName="quantity" 
+              type="number"
+              min="1">
+            </ion-input>
+            <ion-button fill="clear" (click)="increaseQuantity()">
+              <ion-icon name="add" slot="icon-only"></ion-icon>
+            </ion-button>
+          </div>
+        </ion-item>
+        
+        <ion-item class="form-item">
+          <ion-label position="stacked">Preço médio por ação</ion-label>
+          <ion-input 
+            formControlName="averagePrice" 
+            placeholder="0,00"
+            type="number"
+            step="0.01">
+          </ion-input>
+        </ion-item>
+        
+        <div class="form-actions">
+          <ion-button fill="outline" (click)="closePortfolioModal()" class="btn-secondary">
+            Cancelar
+          </ion-button>
+          <ion-button type="submit" [disabled]="!portfolioForm.valid" class="btn-primary">
+            Adicionar
+          </ion-button>
+        </div>
+      </form>
+    </div>
+  </div>
+</ion-content>
