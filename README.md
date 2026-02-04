@@ -16,11 +16,6 @@ Um aplicativo de controle financeiro desenvolvido com Ionic e Angular, replicand
 - **Modo Escuro**: Tema escuro/claro com persistência
 - **Design Responsivo**: Otimizado para dispositivos móveis
 
-## Credenciais de Acesso
-
-**Usuário Admin Padrão:**
-- **Usuário**: `admin`
-- **Senha**: `admin123`
 
 ## Tecnologias Utilizadas
 
@@ -30,31 +25,6 @@ Um aplicativo de controle financeiro desenvolvido com Ionic e Angular, replicand
 - **Ionicons** - Biblioteca de ícones
 - **LocalStorage** - Persistência de dados local
 
-## Estrutura do Projeto
-
-```
-src/
-├── app/
-│   ├── models/           # Modelos de dados
-│   ├── services/         # Serviços (Auth, Transactions, etc.)
-│   ├── guards/           # Guards de autenticação
-│   ├── login/            # Página de login/registro
-│   ├── dashboard/        # Dashboard principal
-│   ├── transactions/     # Módulo de transações
-│   ├── investments/      # Módulo de investimentos
-│   └── goals/           # Módulo de metas
-├── theme/               # Variáveis de tema
-└── global.scss         # Estilos globais
-```
-
-## Design
-
-O aplicativo mantém o mesmo design visual do aplicativo web original:
-- Gradientes azuis (#288CFA → #103766)
-- Cards com sombras suaves
-- Animações fluidas
-- Modo escuro completo
-- Ícones do Ionic
 
 ## Funcionalidades Detalhadas
 
@@ -133,16 +103,7 @@ ionic capacitor add ios
 - O usuário admin é criado automaticamente na primeira execução
 - O modo escuro é persistido entre sessões
 - Dados de exemplo são carregados para novos usuários
-- Simulação de atualizações em tempo real para investimentos
-
-## Próximos Passos
-
-- [ ] Integração com API real
-- [ ] Sincronização em nuvem
-- [ ] Notificações push
-- [ ] Relatórios e gráficos
-- [ ] Exportação de dados
-- [ ] Backup automático
+- Atualizações em tempo real para investimentos usando API de mercado financeiro
 
 ## Licença
 
