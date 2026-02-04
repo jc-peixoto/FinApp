@@ -2,9 +2,9 @@
 
 Um aplicativo de controle financeiro desenvolvido com Ionic e Angular, replicando exatamente a funcionalidade do aplicativo web original.
 
-## 🚀 Funcionalidades
+## Funcionalidades
 
-### ✅ Implementadas
+### Implementadas
 - **Autenticação**: Login/Registro com usuário admin padrão
 - **Dashboard**: Visão geral do saldo, receitas e despesas
 - **Transações**: Adicionar receitas e despesas com categorias
@@ -16,13 +16,13 @@ Um aplicativo de controle financeiro desenvolvido com Ionic e Angular, replicand
 - **Modo Escuro**: Tema escuro/claro com persistência
 - **Design Responsivo**: Otimizado para dispositivos móveis
 
-## 🔐 Credenciais de Acesso
+## Credenciais de Acesso
 
 **Usuário Admin Padrão:**
 - **Usuário**: `admin`
 - **Senha**: `admin123`
 
-## 🛠️ Tecnologias Utilizadas
+## Tecnologias Utilizadas
 
 - **Ionic 8** - Framework para desenvolvimento mobile
 - **Angular 20** - Framework web
@@ -30,7 +30,7 @@ Um aplicativo de controle financeiro desenvolvido com Ionic e Angular, replicand
 - **Ionicons** - Biblioteca de ícones
 - **LocalStorage** - Persistência de dados local
 
-## 📱 Estrutura do Projeto
+## Estrutura do Projeto
 
 ```
 src/
@@ -47,7 +47,7 @@ src/
 └── global.scss         # Estilos globais
 ```
 
-## 🎨 Design
+## Design
 
 O aplicativo mantém o mesmo design visual do aplicativo web original:
 - Gradientes azuis (#288CFA → #103766)
@@ -56,7 +56,7 @@ O aplicativo mantém o mesmo design visual do aplicativo web original:
 - Modo escuro completo
 - Ícones do Ionic
 
-## 📊 Funcionalidades Detalhadas
+## Funcionalidades Detalhadas
 
 ### Dashboard
 - Saldo total com cores dinâmicas (verde/vermelho)
@@ -85,7 +85,7 @@ O aplicativo mantém o mesmo design visual do aplicativo web original:
 - Adicionar dinheiro às metas
 - Exclusão de metas
 
-## 🚀 Como Executar
+## Como Executar
 
 1. **Instalar dependências:**
    ```bash
@@ -108,13 +108,13 @@ O aplicativo mantém o mesmo design visual do aplicativo web original:
    ionic capacitor run ios
    ```
 
-## 📱 Compatibilidade
+## Compatibilidade
 
 - **Android**: 5.0+ (API 21+)
 - **iOS**: 11.0+
 - **Navegadores**: Chrome, Safari, Firefox, Edge
 
-## 🔧 Configuração
+## Configuração
 
 ### Variáveis de Ambiente
 O aplicativo não requer configuração de variáveis de ambiente, utilizando apenas localStorage para persistência.
@@ -127,7 +127,7 @@ ionic capacitor add android
 ionic capacitor add ios
 ```
 
-## 📝 Notas de Desenvolvimento
+## Notas de Desenvolvimento
 
 - Todos os dados são persistidos localmente usando localStorage
 - O usuário admin é criado automaticamente na primeira execução
@@ -135,7 +135,7 @@ ionic capacitor add ios
 - Dados de exemplo são carregados para novos usuários
 - Simulação de atualizações em tempo real para investimentos
 
-## 🎯 Próximos Passos
+## Próximos Passos
 
 - [ ] Integração com API real
 - [ ] Sincronização em nuvem
@@ -144,6 +144,6 @@ ionic capacitor add ios
 - [ ] Exportação de dados
 - [ ] Backup automático
 
-## 📄 Licença
+## Licença
 
 Este projeto é desenvolvido para fins educacionais e de demonstração.
